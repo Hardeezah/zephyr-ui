@@ -1,1 +1,1 @@
-export { Button } from './components/button/mindspa_button';
+export { default as ZephyrButton } from './components/button/zephy_button';
