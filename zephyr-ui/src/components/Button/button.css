@@ -1,0 +1,66 @@
+.storybook-button {
+  display: inline-block;
+  cursor: pointer;
+  border: 0;
+  font-weight: 700;
+  line-height: 1;
+  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  transition: background-color 0.2s, color 0.2s; /* Transition effects */
+}
+
+.storybook-button--primary {
+  background-color: #1ea7fd;
+  color: white;
+}
+
+.storybook-button--secondary {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+  background-color: transparent;
+  color: #333;
+}
+
+.storybook-button--outline {
+  border: 2px solid; /* Updated to use borderColor */
+  background-color: transparent;
+  color: inherit; /* Use textColor */
+}
+
+.storybook-button--ghost {
+  background-color: transparent;
+  color: white;
+  opacity: 0.6;
+}
+
+.storybook-button--filled {
+  background-color: #1ea7fd;
+  color: white;
+}
+
+.storybook-button--small {
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
+.storybook-button--medium {
+  padding: 11px 20px;
+  font-size: 14px;
+}
+
+.storybook-button--large {
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+/* Styles for rounded and non-rounded buttons */
+.storybook-button--rounded {
+  border-radius: 3em;
+}
+
+.storybook-button--non-rounded {
+  border-radius: 0; /* No rounding */
+}
+
+/* Add hover effects */
+.storybook-button:hover {
+  opacity: 0.8; /* Add a slight hover effect */
+}
