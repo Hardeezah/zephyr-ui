@@ -26,7 +26,7 @@ class ZephyrPrimaryTone {
     readonly s80 = "#64706b";
     readonly s90 = "#6b7470";
     readonly s95 = "#727876";
-    readonly 100 = "#808080";
+    readonly s100 = "#808080";
 }
 
 class ZephyrSecondary {
