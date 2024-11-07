@@ -1,7 +1,7 @@
 import React from "react";
 import { type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
-import themes from "./theme";
+import themes from "./button.theme";
 import Loader from "../loader";
 
 interface IProps
@@ -32,4 +32,16 @@ const Button = ({
   );
 };
 
-export default Button;
+interface ButtonProps extends IProps {
+  children: React.ReactNode;
+}
+
+export class ZephyrButton {
+  static primary(props: ButtonProps): React.ReactNode {
+    return <Button variant="primary" {...props} />;
+  }
+
+  static secondary(props: ButtonProps): React.ReactNode {
+    return <Button variant="secondary" {...props} />;
+  }
+}

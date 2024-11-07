@@ -1,6 +1,6 @@
 import { VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
-import themes from "./theme";
+import themes from "./loader.theme";
 
 interface LoaderProps extends VariantProps<typeof themes> {}
 

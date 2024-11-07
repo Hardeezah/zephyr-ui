@@ -21,7 +21,7 @@ const themes = cva(
     },
     defaultVariants: {
       variant: "primary",
-      fullWidth: false,
+      fullWidth: true,
     },
   }
 );

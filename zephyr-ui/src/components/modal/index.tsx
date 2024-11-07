@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "../../lib/utils";
-import modalTheme from "./theme";
+import modalTheme from "./modal.theme";
 import { VariantProps } from "class-variance-authority";
 
 interface ModalProps
