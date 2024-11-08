@@ -121,8 +121,6 @@ jobs:
           release_name: "Release ${{ steps.tag_version.outputs.new_tag }}"
           body: |
             ## Changelog
-            - Version updated to ${{ steps.tag_version.outputs.new_tag }}
-            - Commit Messages: 
-                ${{ steps.commit_messages.outputs.commit_messages }}
+              ${{ steps.commit_messages.outputs.commit_messages }}
           draft: false
           prerelease: false
