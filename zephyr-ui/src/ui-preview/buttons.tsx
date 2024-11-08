@@ -1,4 +1,4 @@
-import { ZephyrButton } from "../components/button";
+import { ZephyrButton } from "@zephyr";
 import PreviewLayout from "./layout/PreviewLayout";
 
 function ButtonsPage() {

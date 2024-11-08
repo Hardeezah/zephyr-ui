@@ -1,9 +1,9 @@
 import React from "react";
-import { cn } from "../../lib/utils";
+import { cn } from "../../util/classnames-merge";
 import modalTheme from "./modal.theme";
-import { VariantProps } from "class-variance-authority";
+import { type VariantProps } from "class-variance-authority";
 
-interface ModalProps
+interface IProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof modalTheme> {
   isOpen: boolean;
@@ -12,7 +12,7 @@ interface ModalProps
   className?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
+const Modal = ({ children, ...props }: IProps): React.ReactNode => {
   if (!props.isOpen) return null;
 
   return (
@@ -23,23 +23,31 @@ const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
   );
 };
 
-export default Modal;
-
-const ModalOverlay = ({ onClose }: { onClose: () => void }) => {
+const ModalOverlay = ({
+  onClose,
+}: {
+  onClose: () => void;
+}): React.ReactNode => {
   return (
-    <div onClick={onClose} className="fixed inset-0 bg-black opacity-50 " />
+    <div onClick={onClose} className="fixed inset-0 bg-black opacity-50" />
   );
 };
 
-const ModalContent: React.FC<ModalProps> = ({
+const ModalContent = ({
   children,
   size,
   className,
   ...rest
-}) => {
+}: IProps): React.ReactNode => {
   return (
     <div className={cn(modalTheme({ size }), className)} {...rest}>
       <div className="r">{children}</div>
     </div>
   );
 };
+
+export class ZephyrModal {
+  static default(props: IProps): React.ReactNode {
+    return <Modal {...props} />;
+  }
+}

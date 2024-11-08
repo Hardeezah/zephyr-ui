@@ -1,5 +1,8 @@
 import { cva } from "class-variance-authority";
-
+const commonClasses = {
+  primary: "border-white",
+  secondary: "border-primaryTint-s30",
+};
 const themes = cva(
   "!border-t-transparent border rounded-full animate-spin bg-transparent w-4 h-4 animate-spin",
   {
@@ -10,8 +13,10 @@ const themes = cva(
         lg: "w-8 h-8",
       },
       variant: {
-        primary: "border-white",
-        secondary: "border-primary-300",
+        primary: commonClasses.primary,
+        primaryLoading: commonClasses.primary,
+        secondary: commonClasses.secondary,
+        secondaryLoading: commonClasses.secondary,
       },
     },
     defaultVariants: {
