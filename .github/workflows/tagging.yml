@@ -93,3 +93,16 @@ jobs:
           new_tag=${{ steps.tag_version.outputs.new_tag }}
           git tag "$new_tag"
           git push origin "$new_tag"
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          release_name: "Release ${{ steps.tag_version.outputs.new_tag }}"
+          body: |
+            ## Changelog
+            - Version updated to ${{ steps.tag_version.outputs.new_tag }}
+          draft: false
+          prerelease: false
