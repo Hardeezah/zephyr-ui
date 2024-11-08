@@ -69,15 +69,16 @@ jobs:
       - name: Capture Commit Messages Since Last Tag
         id: commit_messages
         run: |
-            latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-            if [ -n "$latest_tag" ]; then
-              commits=$(git log "$latest_tag"..HEAD --pretty=format:"- %s" | tr '\n' ' ')
-            else
-              commits=$(git log --pretty=format:"- %s" | tr '\n' ' ')
-            fi
-            echo "commit_messages<<EOF" >> $GITHUB_OUTPUT
-            echo "$commits" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$latest_tag" ]; then
+            commits=$(git log "$latest_tag"..HEAD --no-merges --pretty=format:"- %s")
+          else
+            commits=$(git log --no-merges --pretty=format:"- %s")
+          fi
+          # Use multi-line format to retain line breaks
+          echo "commit_messages<<EOF" >> $GITHUB_OUTPUT
+          echo "$commits" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
   
 
 
