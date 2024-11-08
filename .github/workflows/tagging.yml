@@ -103,7 +103,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add package.json
-          git commit -m "🚀 bump version ${{ steps.tag_version.outputs.new_tag }}"
+          git commit -m "🚀 bump to version ${{ steps.tag_version.outputs.new_tag }}"
           git push
 
       - name: Push new tag
