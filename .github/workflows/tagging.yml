@@ -1,0 +1,95 @@
+name: Build And Tag
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            npm-cache-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Bump version and create tag
+        id: tag_version
+        run: |
+          # Fetch the latest tag
+          git fetch --tags
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $latest_tag"
+          
+          # Split the latest tag into parts
+          IFS='.' read -r -a version_parts <<< "${latest_tag:1}"
+          major="${version_parts[0]:-0}"
+          minor="${version_parts[1]:-0}"
+          patch="${version_parts[2]:-0}"
+
+          # Increment version based on rules
+          if [ "$patch" -lt 20 ]; then
+            patch=$((patch + 1))
+          else
+            patch=0
+            if [ "$minor" -lt 20 ]; then
+              minor=$((minor + 1))
+            else
+              minor=0
+              major=$((major + 1))
+            fi
+          fi
+
+          # Construct new tag
+          new_tag="v$major.$minor.$patch"
+          echo "New tag: $new_tag"
+
+          # Save output using GITHUB_OUTPUT
+          echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
+
+      - name: Update version in package.json
+        run: |
+          new_tag=${{ steps.tag_version.outputs.new_tag }}
+          version_without_v="${new_tag#v}"
+          
+          # Get current version from package.json
+          current_version=$(jq -r '.version' package.json)
+          
+          # Check if the version is different before updating
+          if [ "$current_version" != "$version_without_v" ]; then
+            npm version "$version_without_v" --no-git-tag-version
+            echo "Updated package.json to version $version_without_v"
+          else
+            echo "Version not changed, current version is already $current_version"
+          fi
+
+      - name: Commit version update
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add package.json
+          git commit -m "🚀new(release): update package.json to ${{ steps.tag_version.outputs.new_tag }}"
+          git push
+
+      - name: Push new tag
+        run: |
+          new_tag=${{ steps.tag_version.outputs.new_tag }}
+          git tag "$new_tag"
+          git push origin "$new_tag"
