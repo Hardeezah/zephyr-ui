@@ -1,8 +1,8 @@
-import React from 'react';
-import { ZephyrColors } from '../../foundation/colors';
+import React from "react";
+import { ZephyrColors } from "../../foundation/colors";
 
 interface ZephyrButtonProps {
-  variant: 'primary' | 'secondary';
+  variant: "primary" | "secondary";
   children: React.ReactNode;
   onClick?: () => void;
   isLoading?: boolean;
@@ -16,15 +16,16 @@ const ZephyrButton: React.FC<ZephyrButtonProps> = ({
   isLoading = false,
   disabled = false,
 }) => {
-  const baseStyles = "relative px-4 py-2 rounded-full font-medium transition-colors duration-200";
-  
+  const baseStyles =
+    "relative px-4 py-2 rounded-full font-medium transition-colors duration-200";
+
   const primaryStyles = `
     ${baseStyles}
     bg-[${ZephyrColors.primaryTint.s20}] text-[${ZephyrColors.primaryTint.WH}]
     hover:bg-[${ZephyrColors.primaryTint.s10}]
     disabled:bg-[${ZephyrColors.primaryTint.s80}] disabled:text-[${ZephyrColors.primaryTint.s20}]
   `;
-  
+
   const secondaryStyles = `
     ${baseStyles}
     bg-[${ZephyrColors.primaryTint.WH}] text-[${ZephyrColors.primaryTint.s20}] 
@@ -34,21 +35,22 @@ const ZephyrButton: React.FC<ZephyrButtonProps> = ({
     disabled:border-[${ZephyrColors.neutral.s80}]
   `;
 
-  const buttonStyles = variant === 'primary' ? primaryStyles : secondaryStyles;
+  const buttonStyles = variant === "primary" ? primaryStyles : secondaryStyles;
 
   return React.createElement(
-    'div',
+    "div",
     {
       className: buttonStyles,
       onClick: disabled || isLoading ? undefined : onClick,
-      role: 'button',
+      role: "button",
       tabIndex: disabled || isLoading ? -1 : 0,
-      'aria-disabled': disabled || isLoading,
+      "aria-disabled": disabled || isLoading,
     },
-    isLoading && React.createElement(
-      'span',
-      { className: 'inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin mr-2' }
-    ),
+    isLoading &&
+      React.createElement("span", {
+        className:
+          "inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin mr-2",
+      }),
     children
   );
 };

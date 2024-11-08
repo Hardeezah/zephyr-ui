@@ -1,1 +1,2 @@
-export { default as ZephyrButton } from './components/button/zephy_button';
+export { ZephyrButton } from "./components/button";
+export { ZephyrModal } from "./components/modal";
