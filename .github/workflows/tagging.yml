@@ -69,15 +69,18 @@ jobs:
       - name: Capture Commit Messages Since Last Tag
         id: commit_messages
         run: |
-          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          if [ -n "$latest_tag" ]; then
-            commits=$(git log "$latest_tag"..HEAD --pretty=format:"%s")
-          else
-            commits=$(git log --pretty=format:"%s")
-          fi
-          echo "commit_messages=$commits" >> $GITHUB_OUTPUT
+            latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+            if [ -n "$latest_tag" ]; then
+              commits=$(git log "$latest_tag"..HEAD --pretty=format:"- %s" | tr '\n' ' ')
+            else
+              commits=$(git log --pretty=format:"- %s" | tr '\n' ' ')
+            fi
+            echo "commit_messages<<EOF" >> $GITHUB_OUTPUT
+            echo "$commits" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+  
 
-          
+
       - name: Update version in package.json
         run: |
           new_tag=${{ steps.tag_version.outputs.new_tag }}
