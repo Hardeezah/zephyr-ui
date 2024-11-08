@@ -30,6 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+
       - name: Bump version and create tag
         id: tag_version
         run: |
@@ -64,6 +65,19 @@ jobs:
           # Save output using GITHUB_OUTPUT
           echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
 
+
+      - name: Capture Commit Messages Since Last Tag
+        id: commit_messages
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$latest_tag" ]; then
+            commits=$(git log "$latest_tag"..HEAD --pretty=format:"%s")
+          else
+            commits=$(git log --pretty=format:"%s")
+          fi
+          echo "commit_messages=$commits" >> $GITHUB_OUTPUT
+
+          
       - name: Update version in package.json
         run: |
           new_tag=${{ steps.tag_version.outputs.new_tag }}
@@ -85,7 +99,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add package.json
-          git commit -m "🚀new(release): update package.json to ${{ steps.tag_version.outputs.new_tag }}"
+          git commit -m "🚀 bump version ${{ steps.tag_version.outputs.new_tag }}"
           git push
 
       - name: Push new tag
@@ -104,5 +118,7 @@ jobs:
           body: |
             ## Changelog
             - Version updated to ${{ steps.tag_version.outputs.new_tag }}
+            - Commit Messages: 
+                ${{ steps.commit_messages.outputs.commit_messages }}
           draft: false
           prerelease: false
