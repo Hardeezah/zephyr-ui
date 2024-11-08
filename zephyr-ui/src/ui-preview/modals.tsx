@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { ZephyrButton } from "../components/button";
-import Modal from "../components/modal";
+import { ZephyrButton, ZephyrModal } from "@zephyr";
 import PreviewLayout from "./layout/PreviewLayout";
 
 /**
@@ -54,7 +53,11 @@ function ModalsPage() {
         </ZephyrButton.primary>
 
         {/* Base Size Modal Example */}
-        <Modal isOpen={isBaseModalOpen} onClose={closeBaseModal} size={"base"}>
+        <ZephyrModal.default
+          isOpen={isBaseModalOpen}
+          onClose={closeBaseModal}
+          size={"base"}
+        >
           <div className="p-6">
             <h2 className="text-xl font-bold mb-4">Base Modal Content</h2>
             <p>This is the content of the base modal.</p>
@@ -62,10 +65,14 @@ function ModalsPage() {
               Close Base Modal
             </ZephyrButton.primary>
           </div>
-        </Modal>
+        </ZephyrModal.default>
 
         {/* Large Size Modal Example */}
-        <Modal isOpen={isLgModalOpen} onClose={closeLgModal} size={"lg"}>
+        <ZephyrModal.default
+          isOpen={isLgModalOpen}
+          onClose={closeLgModal}
+          size={"lg"}
+        >
           <div className="p-6">
             <h2 className="text-xl font-bold mb-4">Large Modal Content</h2>
             <p>This is the content of the large modal.</p>
@@ -73,10 +80,10 @@ function ModalsPage() {
               Close Large Modal
             </ZephyrButton.primary>
           </div>
-        </Modal>
+        </ZephyrModal.default>
 
         {/* Auto Size Modal Example */}
-        <Modal isOpen={isAutoModalOpen} onClose={closeAutoModal}>
+        <ZephyrModal.default isOpen={isAutoModalOpen} onClose={closeAutoModal}>
           <div className="p-6">
             <h2 className="text-xl font-bold mb-4">Auto Modal Content</h2>
             <p>This is the content of the auto modal.</p>
@@ -84,7 +91,7 @@ function ModalsPage() {
               Close Auto Modal
             </ZephyrButton.primary>
           </div>
-        </Modal>
+        </ZephyrModal.default>
       </div>
     </PreviewLayout>
   );
