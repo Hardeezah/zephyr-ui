@@ -5,7 +5,7 @@ interface TextStyle {
     fontFamily: string;
 }
 
-abstract class ZephyrTextStyle {
+abstract class BaseZephyrTextStyle {
     abstract displaySmall: TextStyle;
     abstract headlineLarge: TextStyle;
     abstract headlineMedium: TextStyle;
@@ -15,7 +15,7 @@ abstract class ZephyrTextStyle {
     abstract bodySmall: TextStyle;
 }
 
-class DesktopTextStyle extends ZephyrTextStyle {
+class DesktopTextStyle extends BaseZephyrTextStyle {
     displaySmall: TextStyle = {
         fontSize: "64px",
         lineHeight: "1.2",
@@ -60,7 +60,7 @@ class DesktopTextStyle extends ZephyrTextStyle {
     };
 }
 
-class TabletTextStyle extends ZephyrTextStyle {
+class TabletTextStyle extends BaseZephyrTextStyle {
     displaySmall: TextStyle = {
         fontSize: "45px",
         lineHeight: "1.2",
@@ -105,7 +105,7 @@ class TabletTextStyle extends ZephyrTextStyle {
     };
 }
 
-class MobileTextStyle extends ZephyrTextStyle {
+class MobileTextStyle extends BaseZephyrTextStyle {
     displaySmall: TextStyle = {
         fontSize: "36px",
         lineHeight: "1.2",
@@ -150,7 +150,7 @@ class MobileTextStyle extends ZephyrTextStyle {
     };
 }
 
-export class ZephyrTextStyles {
+export class ZephyrTextStyle {
     static readonly desktop = new DesktopTextStyle();
     static readonly tablet = new TabletTextStyle();
     static readonly mobile = new MobileTextStyle();
