@@ -1,0 +1,45 @@
+
+name: Pull Request Preview
+'on':
+  pull_request:
+    branches:
+      - main
+jobs:
+  build_and_preview:
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            npm-cache-${{ runner.os }}-
+          
+      - name: Install dependencies
+        run: npm install
+
+      - name: Change directory to zephyr-ui
+        run: cd zephyr-ui
+
+      - name: Install dependencies
+        run: npm install
+
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ELVA_TECH }}'
+          projectId: elva-tech
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
