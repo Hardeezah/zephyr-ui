@@ -1,6 +1,6 @@
 
 name: Pull Request Preview
-'on':
+on:
   pull_request:
     branches:
       - main
