@@ -25,22 +25,21 @@ jobs:
           restore-keys: |
             npm-cache-${{ runner.os }}-
           
-      - name: Install dependencies
-        run: npm install
-
-      - name: Change directory to zephyr-ui
-        run: cd zephyr-ui
-
-      - name: Install dependencies
-        run: npm install
+      - name: Install root dependencies
+        run: npm install  
+        
+      - name: Install zephyr-ui dependencies
+        working-directory: ./zephyr-ui
+        run: npm install  
 
       - name: Build
+        working-directory: ./zephyr-ui
         run: npm run build
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Generate PR Link
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ELVA_TECH }}'
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ELVA_TECH }}
           projectId: elva-tech
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks
+          entryPoint: ./zephyr-ui
