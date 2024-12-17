@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 const navigationItems = [
   { path: "/ui-preview/buttons", label: "Buttons" },
   { path: "/ui-preview/modals", label: "Modals" },
+  { path: "/ui-preview/tooltips", label: "Tooltips" },
+
 ];
 
 function PreviewLayout({ children }: { children: React.ReactNode }) {
